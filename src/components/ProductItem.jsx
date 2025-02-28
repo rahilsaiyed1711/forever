@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { ShopContext } from '../context/ShopContext'
 import { Link } from 'react-router-dom';
-
+import PropTypes from 'prop-types';
 const ProductItem = ({id, image, name, price}) => {
     const { currency } = useContext(ShopContext);
     return (
@@ -20,6 +20,12 @@ const ProductItem = ({id, image, name, price}) => {
             </div>
         </Link>
     )
-}
+};
+ProductItem.propTypes = {
+    id: PropTypes.string,
+    name: PropTypes.string,
+    image: PropTypes.arrayOf(PropTypes.string),
+    price: PropTypes.number,
+  };
 
 export default ProductItem

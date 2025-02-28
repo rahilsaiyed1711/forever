@@ -3,7 +3,7 @@ import { ShopContext } from '../context/ShopContext'
 import Title from './Title';
 import ProductItem from './ProductItem';
 
-const LatestCollection = () => {
+const   LatestCollection = () => {
   const [latestProducts, setLatestProducts] = useState([]);
   const { products } = useContext(ShopContext);
   useEffect(() => {
@@ -28,7 +28,7 @@ const LatestCollection = () => {
             image={product.image}
             name={product.name}
             price={product.price}
-          /> // another way to pass props to a component is to use the spread operator (<ProductItem key={idx} {...product} />)
+          />
         ))}
       </div>
     </div>

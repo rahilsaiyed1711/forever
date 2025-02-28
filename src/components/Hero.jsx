@@ -6,7 +6,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import { Link } from 'react-router-dom';
 
 const Hero = () => {
-  const images = [assets.hero_img, assets.hero_imag, assets.home_image]; // Add more images as needed
+  const images = [assets.hero_img, assets.hero_imag, assets.home_image];
 
   const settings = {
     dots: true,
@@ -15,7 +15,7 @@ const Hero = () => {
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 2000, // Change image every 10 seconds
+    autoplaySpeed: 2000, 
   };
 
   return (
@@ -38,7 +38,7 @@ const Hero = () => {
       </div>
 
       {/* Hero Right Side with Slider */}
-      <div className="w-full sm:w-1/2">
+      <div className="w-full sm:w-1/2 ">
         <Slider {...settings}>
           {images.map((image, index) => (
             <div key={index}>
