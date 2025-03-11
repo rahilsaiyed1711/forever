@@ -37,7 +37,7 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* Hero Right Side with Slider */}
+      {/* Hero Right Side with Slider */} 
       <div className="w-full sm:w-1/2 ">
         <Slider {...settings}>
           {images.map((image, index) => (

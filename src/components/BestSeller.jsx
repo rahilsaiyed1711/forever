@@ -30,7 +30,7 @@ const BestSeller = () => {
                 ))}
             </div>
         </div>
-
+ 
     )
 }
 

@@ -28,7 +28,7 @@ const NewsLetter = () => {
         <button
           type='submit'
           className='bg-black text-white text-xs px-10 py-4 '
-        >
+        > 
           Subscribe
         </button>
       </form>

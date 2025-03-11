@@ -26,9 +26,9 @@ const Contact = () => {
       <div className="flex flex-col justify-center items-start gap-4">
         <p className="font-semibold text-altext-gray-600">Our Store</p>
         <p className="text-gray-500">
-          7298 King Lodge
+          javascript street
           <br />
-          North Elton, Illinois 78154
+          Node city, event based architecture 78154
         </p>
 
         <p className="text-gray-800">
