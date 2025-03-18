@@ -1,16 +1,18 @@
+import axios from 'axios';
 import PropTypes from 'prop-types';
-import { createContext, useState } from 'react';
-import { products } from '../assets/assets';
+import { createContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 export const ShopContext = createContext();
 import { toast } from 'react-toastify';
 export const ShopContextProvider = ({ children }) => {
   const currency = '$';
   const delivery_fee = 10;
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const [search, setSearch] = useState('');
   const [showSearch, setShowSearch] = useState(false);
   const [cartItems, setCartItems] = useState({});
   const [orders, setOrders] = useState([]);
+  const [products, setProducts] = useState([]);
   const navigate = useNavigate();
 
   const addToCart = async (itemId, size) => {
@@ -68,7 +70,6 @@ export const ShopContextProvider = ({ children }) => {
     setCartItems(cartData);
   };
 
-
   const getCartAmount = () => {
     let totalAmount = 0;
     for (const item in cartItems) {
@@ -85,6 +86,25 @@ export const ShopContextProvider = ({ children }) => {
     }
     return totalAmount;
   };
+
+  const getProductsData = async () => {
+    try {
+      const response = await axios.get(backendUrl + '/api/products/list');
+      console.log(response);
+      if (response.data.success) {
+        console.log('Fetched products:', response.data.data);
+        setProducts(response.data.data);
+      } else {
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  useEffect(() => {
+    getProductsData();
+  }, []);
   const value = {
     products,
     currency,
@@ -98,16 +118,16 @@ export const ShopContextProvider = ({ children }) => {
     getCartCount,
     updateQuantity,
     getCartAmount,
-    addOrder, 
-    orders,               
+    backendUrl,
+    addOrder,
+    orders,
     navigate,
   };
   return <ShopContext.Provider value={value}>{children}</ShopContext.Provider>;
 };
 
-
-ShopContextProvider.PropTypes={
-    children: PropTypes.node.isRequired,
-}
+ShopContextProvider.PropTypes = {
+  children: PropTypes.node.isRequired,
+};
 
 export default ShopContextProvider;
