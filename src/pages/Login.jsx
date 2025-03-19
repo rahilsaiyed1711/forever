@@ -1,15 +1,31 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import axios from 'axios';
 import Title from '../components/Title';
+import { toast } from 'react-toastify';
+import { ShopContext } from '../context/ShopContext';
 const Login = () => {
   const [currentState, setCurrentState] = useState('Sign Up');
-  const [isForgotPassword, setIsForgotPassword] = useState(false);
-  const onSubmitHandler = (e) => {
+  const {token , setToken , navigate, backendUrl} = useContext(ShopContext)
+
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const onSubmitHandler = async(e) => {
     e.preventDefault();
-    if (isForgotPassword) {
-      // Handle forgot password logic here
-    } else {
-      // Handle login or sign up logic here
+    console.log({ name, email, password });
+    if (currentState ==="Sign Up") {
+      const response = await axios.post(backendUrl+"/api/users/register",{name, email, password});
+      console.log(response)
+      if (response.status ===200) {
+        location.assign("/login")
+        console.log(response.data.token)
+      }
+    }else if(currentState === "Login"){
+      const response = await axios.post(backendUrl+"/api/users/Login",{email, password})
+      console.log(response)
     }
+
   };
   return (
     <form
@@ -35,44 +51,33 @@ const Login = () => {
         )}
       </div>
       <div className='w-full px-3 py-2 flex flex-col gap-4'>
-        {isForgotPassword ? (
+        {currentState === 'Sign Up' ? (
           <input
-            type='email'
+            onChange={(e) => { setName(e.target.value) }}
+            value={name}
+            type='text'
             className='w-Full px-3 py-2 border border-gray-880'
-            placeholder='Enter your email to reset password'
+            placeholder='Name'
             required
           />
-        ) : (
-          <>
-            {currentState === 'Sign Up' ? (
-              <input
-                type='text'
-                className='w-Full px-3 py-2 border border-gray-880'
-                placeholder='Name'
-                required
-              />
-            ) : null}
-            <input
-              type='email'
-              className='w-Full px-3 py-2 border border-gray-880'
-              placeholder='Email'
-              required
-            />
-            <input
-              type='password'
-              className='w-Full px-3 py-2 border border-gray-880'
-              placeholder='Password'
-              required
-            />
-          </>
-        )}
+        ) : null}
+        <input
+          onChange={(e) => { setEmail(e.target.value) }}
+          type='email'
+          value={email}
+          className='w-Full px-3 py-2 border border-gray-880'
+          placeholder='Email'
+          required
+        />
+        <input
+          onChange={(e) => { setPassword(e.target.value) }}
+          type='password'
+          value={password}
+          className='w-Full px-3 py-2 border border-gray-880'
+          placeholder='Password'
+          required
+        />
         <div className='w-full flex justify-between text-sm mt-[-8px]'>
-          <p
-            onClick={() => setIsForgotPassword(!isForgotPassword)}
-            className='cursor-pointer'
-          >
-            {isForgotPassword ? 'Back to Login' : 'Forgot your password?'}
-          </p>
           {currentState === 'Login' ? (
             <p
               onClick={() => setCurrentState('Sign Up')}
@@ -89,6 +94,9 @@ const Login = () => {
             </p>
           )}
         </div>
+        <button className="w-1/2 m-auto bg-black text-white px-8 py-2 mt-4 ">
+          {currentState === 'Login' ? 'Sign In' : 'Sign Up'}
+        </button>
       </div>
     </form>
   );

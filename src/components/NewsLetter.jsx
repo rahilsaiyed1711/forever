@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { toast } from 'react-toastify';
 const NewsLetter = () => {
   const onSubmitHandler = (e) => {
     e.preventDefault();

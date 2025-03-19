@@ -13,6 +13,8 @@ export const ShopContextProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState({});
   const [orders, setOrders] = useState([]);
   const [products, setProducts] = useState([]);
+  const [token, setToken] = useState('');
+
   const navigate = useNavigate();
 
   const addToCart = async (itemId, size) => {
@@ -122,6 +124,8 @@ export const ShopContextProvider = ({ children }) => {
     addOrder,
     orders,
     navigate,
+    token,
+    setToken,
   };
   return <ShopContext.Provider value={value}>{children}</ShopContext.Provider>;
 };

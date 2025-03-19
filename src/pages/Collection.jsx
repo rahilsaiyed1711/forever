@@ -77,8 +77,9 @@ const Collection = () => {
     setFilterProducts(filteredProdCopy); 
   };
 
+
   useEffect(() => {
-    applyFilter();
+    applyFilter(); 
   }, [category, subCategory, search, showSearch, products]);
 
   useEffect(() => {
